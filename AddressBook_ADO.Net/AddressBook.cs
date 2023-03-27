@@ -44,5 +44,49 @@ namespace AddressBook_ADO.Net
                 Console.WriteLine(ex.Message);
             }
         }
+        public void GetAllDataFromDB()
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            try
+            {
+                List<AddressBookModel> addressBookList = new List<AddressBookModel>();
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand("SpGetAllData", sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            AddressBookModel addressBookModel = new AddressBookModel();
+                            addressBookModel.FirstName = sqlReader.GetString(0);
+                            addressBookModel.LastName = sqlReader.GetString(1);
+                            addressBookModel.Address = sqlReader.GetString(2);
+                            addressBookModel.City = sqlReader.GetString(3);
+                            addressBookModel.State = sqlReader.GetString(4);
+                            addressBookModel.Zip = sqlReader.GetInt32(5);
+                            addressBookModel.PhoneNumber = sqlReader.GetInt64(6);
+                            addressBookModel.Email = sqlReader.GetString(7);
+
+                            addressBookList.Add(addressBookModel);
+                        }
+                        foreach (AddressBookModel contact in addressBookList)
+                        {
+                            Console.WriteLine(contact.FirstName + " " + contact.LastName + " " + contact.Address + " " + contact.City + " " + contact.State + " " + contact.Zip);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found in table");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

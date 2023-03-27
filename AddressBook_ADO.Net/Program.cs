@@ -21,12 +21,15 @@ namespace AddressBook_ADO.Net
                 Email = "Shivani@gmail.com"
             };
             Console.WriteLine("Enter an option");
-            Console.WriteLine("1:Add new contact");
+            Console.WriteLine("1:Add new contact\n2:Get all data from DataBase");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
                 case 1:
                     addressBook.AddNewContactInDataBase(addressBookModel);
+                    break;
+                case 2:
+                    addressBook.GetAllDataFromDB();
                     break;
                 default:
                     Console.WriteLine("Enter correct option");

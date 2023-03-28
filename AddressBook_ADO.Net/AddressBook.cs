@@ -114,5 +114,31 @@ namespace AddressBook_ADO.Net
                 Console.WriteLine(ex.Message);
             }
         }
+        public void UpdateSpecificData(AddressBookModel addressBookModel)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand("SpUpdateSpecificData", sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@FirstName", addressBookModel.FirstName);
+                    sqlCommand.Parameters.AddWithValue("@LastName", addressBookModel.LastName);
+                    int result = sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+
+                    if (result >= 1)
+                        Console.WriteLine("Data updated successfully");
+                    else
+                        Console.WriteLine("Data not fount to update");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

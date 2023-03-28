@@ -18,22 +18,52 @@ namespace AddressBook_ADO.Net
                 State = "Maharastra",
                 Zip = 40035,
                 PhoneNumber = 8983922703,
-                Email = "Shivani@gmail.com"
+                Email = "Shivani@gmail.com",
             };
-            Console.WriteLine("Enter an option");
-            Console.WriteLine("1:Add new contact\n2:Get all data from DataBase");
-            int option = Convert.ToInt32(Console.ReadLine());
-            switch (option)
+            AddressBookModel addressBookModel1 = new AddressBookModel()
             {
-                case 1:
-                    addressBook.AddNewContactInDataBase(addressBookModel);
-                    break;
-                case 2:
-                    addressBook.GetAllDataFromDB();
-                    break;
-                default:
-                    Console.WriteLine("Enter correct option");
-                    break;
+                FirstName = "Shubham",
+                LastName = "D",
+                Address = "KN",
+                City = "Pune",
+                State = "Maharastra",
+                Zip = 400045,
+                PhoneNumber = 8983921256,
+                Email = "malhar@gmail.com",
+            };
+            AddressBookModel addressUpdate = new AddressBookModel
+            {
+                FirstName = "Mandy",
+                LastName = "D"
+            };
+            bool flag = true;
+            while (flag)
+            {
+                Console.WriteLine("Enter an option");
+                Console.WriteLine("1:Add new contact\n2:Get all data from DataBase\n3:Delete specific data\n4:Update specific data\n5:Exit");
+                int option = Convert.ToInt32(Console.ReadLine());
+                switch (option)
+                {
+                    case 1:
+                        addressBook.AddNewContactInDataBase(addressBookModel);
+                        addressBook.AddNewContactInDataBase(addressBookModel1);
+                        break;
+                    case 2:
+                        addressBook.GetAllDataFromDB();
+                        break;
+                    case 3:
+                        addressBook.DeleteSpecificData("Shivani","Divekar");
+                        break;
+                    case 4:
+                        addressBook.UpdateSpecificData(addressUpdate);
+                        break;
+                    case 5:
+                        flag = false;
+                        break;
+                    default:
+                        Console.WriteLine("Enter correct option");
+                        break;
+                }
             }
         }
     }

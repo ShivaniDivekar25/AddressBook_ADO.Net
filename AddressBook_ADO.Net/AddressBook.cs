@@ -88,5 +88,31 @@ namespace AddressBook_ADO.Net
                 Console.WriteLine(ex.Message);
             }
         }
+        public void DeleteSpecificData(string firstName,string lastName)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand("SpSpecificDataFromDB", sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@FirstName", firstName);
+                    sqlCommand.Parameters.AddWithValue("@LastName", lastName);
+                    int result = sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+
+                    if(result >= 1)
+                        Console.WriteLine("Data deleted successfully");
+                    else
+                        Console.WriteLine("Error occur while deleting data");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }
